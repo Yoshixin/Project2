@@ -1,0 +1,19 @@
+<%- include("../includes/header.ejs", {title:"Accounts - " + result[0].first_name}); %>
+    <h1>Accounts</h1>
+    <ul>
+        <li>Account Name: <%= result[0].first_name %></li>
+        <li>Email: <%= result[0].email%></li>
+        <li>Resume(s):
+            <ul>
+                <% for(var i=0; result.length > i; i++ ) {
+                    if (result[i].resume_name !=null) { %>
+                    <li><%= result[i].resume_name  %></li>
+                <% } } %>
+            </ul>
+        </li>
+        <br />
+    </ul>
+
+<a href="/account/all"><< back</a>
+
+<%- include("../includes/footer.ejs"); %>
