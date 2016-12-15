@@ -15,7 +15,7 @@
                 <td><a href="/school/?school_id=<%= result[i].school_id %>"><%= result[i].school_name %></a></td>
                 <td><%= result[i].street %>, <%= result[i].zipcode %></td>
                 <td>
-                    <button onclick="event.preventDefault();window.location.href='/school/edit2/?school_id=<%= result[i].school_id %>'">Edit</button>
+                    <button onclick="event.preventDefault();window.location.href='/mastery/edit2/?school_id=<%= result[i].school_id %>'">Edit</button>
                     <form action="/school/delete/" style="display:inline;">
                         <input type="hidden" name="school_id" id="school_id" value="<%= result[i].school_id %>" />
                         <input type="submit" value="Delete"/>

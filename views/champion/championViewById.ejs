@@ -1,7 +1,7 @@
-<%- include("../includes/header.ejs", {title:"Companies - " + result[0].company_name}); %>
+<%- include("../includes/header.ejs", {title:"Companies - " + result[0].champion_name}); %>
     <h1>Companies</h1>
     <ul>
-        <li>Company Name: <%= result[0].company_name %></li>
+        <li>champion Name: <%= result[0].champion_name %></li>
         <li>Address(es):
             <ul>
                 <% for(var i=0; result.length > i; i++ ) { %>
@@ -11,6 +11,6 @@
         </li>
     </ul>
 
-<a href="/company/all"><< back</a>
+<a href="/champion/all"><< back</a>
 
 <%- include("../includes/footer.ejs"); %>

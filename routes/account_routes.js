@@ -4,7 +4,7 @@
 var express = require('express');
 var router = express.Router();
 var account_dal = require('../model/account_dal');
-var resume_dal = require('../model/resume_dal');
+var resume_dal = require('../model/mastery_dal');
 
 
 // View All resumes
@@ -37,7 +37,7 @@ router.get('/', function(req, res){
     }
 });
 
-// Return the add a new resume form
+// Return the add a new rune form
 router.get('/add', function(req, res){
     // passing all the query parameters (req.query) to the insert function instead of each individually
     resume_dal.getAll(function(err,result) {
@@ -45,7 +45,7 @@ router.get('/add', function(req, res){
             res.send(err);
         }
         else {
-            res.render('resume/resumeAdd', {'resume': result});
+            res.render('rune/resumeAdd', {'resume': result});
         }
     });
 
@@ -58,7 +58,7 @@ router.get('/insert', function(req, res){
         res.send('Account Name must be provided.');
     }
     else if(req.query.resume_id == null) {
-        res.send('At least one resume must be selected');
+        res.send('At least one rune must be selected');
     }
     else {
         // passing all the query parameters (req.query) to the insert function instead of each individually

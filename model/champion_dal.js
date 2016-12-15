@@ -6,13 +6,13 @@ var connection = mysql.createConnection(db.config);
 
 /*
  create or replace view company_view as
- select s.*, a.street, a.zipcode from company s
+ select s.*, a.street, a.zipcode from champion s
  join address a on a.address_id = s.address_id;
 
  */
 
 exports.getAll = function(callback) {
-    var query = 'SELECT * FROM company;';
+    var query = 'SELECT * FROM champion;';
 
     connection.query(query, function(err, result) {
         callback(err, result);
@@ -20,7 +20,7 @@ exports.getAll = function(callback) {
 };
 
 exports.getById = function(company_id, callback) {
-    var query = 'SELECT c.*, a.street, a.zip_code FROM company c ' +
+    var query = 'SELECT c.*, a.street, a.zip_code FROM champion c ' +
         'LEFT JOIN company_address ca on ca.company_id = c.company_id ' +
         'LEFT JOIN address a on a.address_id = ca.address_id ' +
         'WHERE c.company_id = ?';
@@ -36,7 +36,7 @@ exports.getById = function(company_id, callback) {
 exports.insert = function(params, callback) {
 
     // FIRST INSERT THE COMPANY
-    var query = 'INSERT INTO company (company_name) VALUES (?)';
+    var query = 'INSERT INTO champion (company_name) VALUES (?)';
 
     var queryData = [params.company_name];
 
@@ -63,7 +63,7 @@ exports.insert = function(params, callback) {
 };
 
 exports.delete = function(company_id, callback) {
-    var query = 'DELETE FROM company WHERE company_id = ?';
+    var query = 'DELETE FROM champion WHERE company_id = ?';
     var queryData = [company_id];
 
     connection.query(query, queryData, function(err, result) {
@@ -102,12 +102,12 @@ var companyAddressDeleteAll = function(company_id, callback){
 module.exports.companyAddressDeleteAll = companyAddressDeleteAll;
 
 exports.update = function(params, callback) {
-    var query = 'UPDATE company SET company_name = ? WHERE company_id = ?';
+    var query = 'UPDATE champion SET company_name = ? WHERE company_id = ?';
 
     var queryData = [params.company_name, params.company_id];
 
     connection.query(query, queryData, function(err, result) {
-        //delete company_address entries for this company
+        //delete company_address entries for this champion
         companyAddressDeleteAll(params.company_id, function(err, result){
 
             if(params.address_id != null) {
@@ -130,7 +130,7 @@ exports.update = function(params, callback) {
      CREATE PROCEDURE company_getinfo (_company_id int)
      BEGIN
 
-     SELECT * FROM company WHERE company_id = _company_id;
+     SELECT * FROM champion WHERE company_id = _company_id;
 
      SELECT a.*, s.company_id FROM address a
      LEFT JOIN company_address s on s.address_id = a.address_id AND company_id = _company_id

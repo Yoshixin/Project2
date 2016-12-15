@@ -1,9 +1,9 @@
-<%- include("../includes/header.ejs", {title: "Update " + company.company_name}); %>
+<%- include("../includes/header.ejs", {title: "Update " + champion.champion_name}); %>
 
-<h1>Update <%= company.company_name%></h1>
-<form action="/company/update" method="get">
-    <input type="hidden" id="company_id" name="company_id" value="<%= company.company_id %>">
-    Company Name: <input id="company_name" name="company_name" type="text" value="<%= company.company_name%>"/>
+<h1>Update <%= champion.champion_name%></h1>
+<form action="/champion/update" method="get">
+    <input type="hidden" id="champion_id" name="champion_id" value="<%= champion.champion_id %>">
+    champion Name: <input id="champion_name" name="champion_name" type="text" value="<%= champion.champion_name%>"/>
     <br />
     <br />
     Address <br />
@@ -11,7 +11,7 @@
         <% for(var i=0; address.length > i; i++ ) {
             var selected = "";
 
-            if(address[i].company_id != null) {
+            if(address[i].champion_id != null) {
                 selected = "selected";
             }
         %>

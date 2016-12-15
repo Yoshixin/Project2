@@ -9,17 +9,17 @@ var connection = mysql.createConnection(db.config);
 
 /*
  create or replace view resume_view as
- select r.resume_name, s.school_name, c.company_name, sk.name from resume r
+ select r.resume_name, s.school_name, c.company_name, sk.name from rune r
  join resume_school rs on rs.resume_id = r.resume_id
- join school s on s.school_id = rs.school_id
+ join mastery s on s.school_id = rs.school_id
  join resume_company rc on r.resume_id = rc.company_id
- join company c on c.company_id = rc.company_id
+ join champion c on c.company_id = rc.company_id
  join resume_skill rsk on rsk.resume_id = r.resume_id
- join skill sk on sk.skill_id = rsk.skill_id;
+ join ability sk on sk.skill_id = rsk.skill_id;
  */
 
 exports.getAll = function(callback) {
-    var query = 'SELECT * FROM resume;';
+    var query = 'SELECT * FROM rune;';
 
     connection.query(query, function(err, result) {
         callback(err, result);
@@ -37,7 +37,7 @@ exports.getById = function(resume_id, callback) {
 };
 
 exports.insert = function(params, callback) {
-    var query = 'INSERT INTO resume (resume_name, user_account_id) VALUES (?, ?)';
+    var query = 'INSERT INTO rune (resume_name, user_account_id) VALUES (?, ?)';
 
     // the question marks in the sql query above will be replaced by the values of the
     // the data in queryData
@@ -122,7 +122,7 @@ var resumeSkillDeleteAll = function(resume_id, callback){
 module.exports.resumeSkillDeleteAll = resumeSkillDeleteAll;
 
 exports.delete = function(resume_id, callback) {
-    var query = 'DELETE FROM resume WHERE resume_id = ?';
+    var query = 'DELETE FROM rune WHERE resume_id = ?';
     var queryData = [resume_id];
 
     connection.query(query, queryData, function(err, result) {
@@ -132,7 +132,7 @@ exports.delete = function(resume_id, callback) {
 };
 
 exports.update = function(params, callback) {
-    var query = 'UPDATE resume SET resume_name = ?, user_account_id = ? WHERE resume_id = ?';
+    var query = 'UPDATE rune SET resume_name = ?, user_account_id = ? WHERE resume_id = ?';
     var queryData = [params.resume_name, params.user_account_id, params.resume_id];
 
     connection.query(query, queryData, function(err, result) {

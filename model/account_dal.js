@@ -9,13 +9,13 @@ var connection = mysql.createConnection(db.config);
 
 /*
  create or replace view resume_view as
- select r.resume_name, s.school_name, c.company_name, sk.name from resume r
+ select r.resume_name, s.school_name, c.company_name, sk.name from rune r
  join resume_school rs on rs.resume_id = r.resume_id
- join school s on s.school_id = rs.school_id
+ join mastery s on s.school_id = rs.school_id
  join resume_company rc on r.resume_id = rc.company_id
- join company c on c.company_id = rc.company_id
+ join champion c on c.company_id = rc.company_id
  join resume_skill rsk on rsk.resume_id = r.resume_id
- join skill sk on sk.skill_id = rsk.skill_id;
+ join ability sk on sk.skill_id = rsk.skill_id;
  */
 
 exports.getAll = function(callback) {
@@ -29,7 +29,7 @@ exports.getAll = function(callback) {
 exports.getById = function(account_id, callback) {
     //var query = 'SELECT * FROM resume_view WHERE resume_id = ?';
     var query = 'Select a.*, r.resume_name from account a ' +
-        'Left Join resume r on r.user_account_id = a.account_id and a.account_id = ?';
+        'Left Join rune r on r.user_account_id = a.account_id and a.account_id = ?';
     var queryData = [account_id];
 
     connection.query(query, queryData, function(err, result) {

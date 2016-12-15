@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var company_dal = require('../model/company_dal');
-var address_dal = require('../model/address_dal');
+var company_dal = require('../model/champion_dal');
+var address_dal = require('../model/ability_dal');
 
 
 // View All companies
@@ -11,13 +11,13 @@ router.get('/all', function(req, res) {
             res.send(err);
         }
         else {
-            res.render('company/companyViewAll', { 'result':result });
+            res.render('champion/companyViewAll', { 'result':result });
         }
     });
 
 });
 
-// View the company for the given id
+// View the champion for the given id
 router.get('/', function(req, res){
     if(req.query.company_id == null) {
         res.send('company_id is null');
@@ -28,13 +28,13 @@ router.get('/', function(req, res){
                res.send(err);
            }
            else {
-               res.render('company/companyViewById', {'result': result});
+               res.render('champion/companyViewById', {'result': result});
            }
         });
     }
 });
 
-// Return the add a new company form
+// Return the add a new champion form
 router.get('/add', function(req, res){
     // passing all the query parameters (req.query) to the insert function instead of each individually
     address_dal.getAll(function(err,result) {
@@ -42,12 +42,12 @@ router.get('/add', function(req, res){
             res.send(err);
         }
         else {
-            res.render('company/companyAdd', {'address': result});
+            res.render('champion/companyAdd', {'address': result});
         }
     });
 });
 
-// View the company for the given id
+// View the champion for the given id
 router.get('/insert', function(req, res){
     // simple validation
     if(req.query.company_name == null) {
@@ -65,7 +65,7 @@ router.get('/insert', function(req, res){
             }
             else {
                 //poor practice for redirecting the user to a different page, but we will handle it differently once we start using Ajax
-                res.redirect(302, '/company/all');
+                res.redirect(302, '/champion/all');
             }
         });
     }
@@ -73,12 +73,12 @@ router.get('/insert', function(req, res){
 
 router.get('/edit', function(req, res){
     if(req.query.company_id == null) {
-        res.send('A company id is required');
+        res.send('A champion id is required');
     }
     else {
         company_dal.edit(req.query.company_id, function(err, result){
             console.log(result);
-            res.render('company/companyUpdate', {company: result[0][0], address: result[1]});
+            res.render('champion/companyUpdate', {company: result[0][0], address: result[1]});
         });
     }
 
@@ -86,12 +86,12 @@ router.get('/edit', function(req, res){
 
 router.get('/edit2', function(req, res){
    if(req.query.company_id == null) {
-       res.send('A company id is required');
+       res.send('A champion id is required');
    }
    else {
        company_dal.getById(req.query.company_id, function(err, company){
            address_dal.getAll(function(err, address) {
-               res.render('company/companyUpdate', {company: company[0], address: address});
+               res.render('champion/companyUpdate', {company: company[0], address: address});
            });
        });
    }
@@ -100,11 +100,11 @@ router.get('/edit2', function(req, res){
 
 router.get('/update', function(req, res) {
     company_dal.update(req.query, function(err, result){
-       res.redirect(302, '/company/all');
+       res.redirect(302, '/champion/all');
     });
 });
 
-// Delete a company for the given company_id
+// Delete a champion for the given company_id
 router.get('/delete', function(req, res){
     if(req.query.company_id == null) {
         res.send('company_id is null');
@@ -116,7 +116,7 @@ router.get('/delete', function(req, res){
              }
              else {
                  //poor practice, but we will handle it differently once we start using Ajax
-                 res.redirect(302, '/company/all');
+                 res.redirect(302, '/champion/all');
              }
          });
     }
