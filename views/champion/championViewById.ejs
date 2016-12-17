@@ -1,11 +1,11 @@
-<%- include("../includes/header.ejs", {title:"Companies - " + result[0].champion_name}); %>
-    <h1>Companies</h1>
+<%- include("../includes/header.ejs", {title:"Champions - " + result[0].name}); %>
+    <h1>Champions</h1>
     <ul>
-        <li>champion Name: <%= result[0].champion_name %></li>
-        <li>Address(es):
+        <li>champion Name: <%= result[0].name %></li>
+        <li>Ability(ies):
             <ul>
                 <% for(var i=0; result.length > i; i++ ) { %>
-                    <li><%= result[i].street + ', ' + result[i].zip_code %></li>
+                    <li><%= result[i].ability_name + ', ' + result[i].description %></li>
                 <% } %>
             </ul>
         </li>

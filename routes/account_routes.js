@@ -4,10 +4,11 @@
 var express = require('express');
 var router = express.Router();
 var account_dal = require('../model/account_dal');
-var resume_dal = require('../model/mastery_dal');
+var champion_dal = require('../model/champion_dal');
 
 
-// View All resumes
+
+// View All champions
 router.get('/all', function(req, res) {
     account_dal.getAll(function(err, result){
         if(err) {
@@ -40,12 +41,12 @@ router.get('/', function(req, res){
 // Return the add a new rune form
 router.get('/add', function(req, res){
     // passing all the query parameters (req.query) to the insert function instead of each individually
-    resume_dal.getAll(function(err,result) {
+    champion_dal.getAll(function(err,result) {
         if (err) {
             res.send(err);
         }
         else {
-            res.render('rune/resumeAdd', {'resume': result});
+            res.render('account/accountAdd', {'account': result});
         }
     });
 
@@ -54,11 +55,11 @@ router.get('/add', function(req, res){
 // View the account for the given id
 router.get('/insert', function(req, res){
     // simple validation
-    if(req.query.account_name == null) {
+    if(req.query.username == null) {
         res.send('Account Name must be provided.');
     }
-    else if(req.query.resume_id == null) {
-        res.send('At least one rune must be selected');
+    else if(req.query.champion_id == null) {
+        res.send('At least one champion must be selected');
     }
     else {
         // passing all the query parameters (req.query) to the insert function instead of each individually
@@ -77,12 +78,12 @@ router.get('/insert', function(req, res){
 
 router.get('/edit', function(req, res){
     if(req.query.account_id == null) {
-        res.send('A account id is required');
+        res.send('An account id is required');
     }
     else {
         account_dal.edit(req.query.account_id, function(err, result){
             console.log(result);
-            res.render('account/accountUpdate', {account: result[0][0], resume: result[1]});
+            res.render('account/accountUpdate', {account: result[0]});
         });
     }
 
@@ -94,8 +95,8 @@ router.get('/edit2', function(req, res){
     }
     else {
         account_dal.getById(req.query.account_id, function(err, account){
-            school_dal.getAll(function(err, school) {
-                res.render('account/accountUpdate', {account: account[0], resume: resume});
+            champion_dal.getAll(function(err, school) {
+                res.render('account/accountUpdate', {account: account[0]});
             });
         });
     }
@@ -103,7 +104,7 @@ router.get('/edit2', function(req, res){
 });
 
 router.get('/update', function(req, res) {
-    resume_dal.update(req.query, function(err, result){
+    champion_dal.update(req.query, function(err, result){
         res.redirect(302, '/account/all');
     });
 });

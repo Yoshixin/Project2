@@ -1,56 +1,27 @@
 <%- include("../includes/header.ejs", {title:"Add New rune"}); %>
 
-    <h1>Add New resume</h1>
-    <form action="/resume/insert" method="get">
-        resume Name: <input id="resume_name" name="resume_name" type="text" />
+    <h1>Add New Rune</h1>
+    <form action="/rune/insert" method="get">
+        Page name: <input id="page_name" name="page_name" type="text" />
         <br />
         <br />
 
-        school
+        Attached to account_id: <input id="account_id" name="account_id" type="number" />
         <br />
-        <select id="school_id" name="school_id" multiple="multiple">
-            <% for(var i=0; school.length > i; i++ ) { %>
-            <option value="<%= school[i].school_id %>"><%= school[i].school_name %></option>
-            <% } %>
-        </select>
         <br />
-        <!-- Initialize the multiselect plugin: -->
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $('#school_id').multiselect();
-            });
-        </script>
 
-        company
+        Mark: <input id="mark" name="mark" type = "text" />
         <br />
-        <select id="company_id" name="company_id" multiple="multiple">
-            <% for(var i=0; company.length > i; i++ ) { %>
-            <option value="<%= company[i].company_id %>"><%= company[i].company_name %></option>
-            <% } %>
-        </select>
         <br />
-        <!-- Initialize the multiselect plugin: -->
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $('#company_id').multiselect();
-            });
-        </script>
-
-        skill
+        Seal: <input id="seal" name="seal" type = "text" />
         <br />
-        <select id="skill_id" name="skill_id" multiple="multiple">
-            <% for(var i=0; skill.length > i; i++ ) { %>
-            <option value="<%= skill[i].skill_id %>"><%= skill[i].name %></option>
-            <% } %>
-        </select>
         <br />
-        <!-- Initialize the multiselect plugin: -->
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $('#skill_id').multiselect();
-            });
-        </script>
-
+        Glyph: <input id="glyph" name="glyph" type = "text" />
+        <br />
+        <br />
+        Quintessence: <input id="quintessence" name="quintessence" type = "text" />
+        <br />
+        <br />
 
 
         <br />

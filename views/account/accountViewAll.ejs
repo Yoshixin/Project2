@@ -9,7 +9,7 @@
             <tr><th>Name</th><th>Actions</th></tr>
             <% for(var i=0; result.length > i; i++ ) { %>
             <tr>
-                <td><a href="/account/?account_id=<%= result[i].account_id %>"><%= result[i].email %></a></td>
+                <td><a href="/account/?account_id=<%= result[i].account_id %>"><%= result[i].username %></a></td>
                 <td>
                     <button onclick="event.preventDefault();window.location.href='/account/edit/?account_id=<%= result[i].account_id %>'">Edit</button>
                     <form action="/account/delete/" style="display:inline;">

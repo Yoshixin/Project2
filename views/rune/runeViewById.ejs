@@ -1,33 +1,13 @@
-<%- include("../includes/header.ejs", {title:"Resumes - " + result[0].resume_name}); %>
-    <h1>Resumes</h1>
+<%- include("../includes/header.ejs", {title:"Runes - " + result[0].page_name}); %>
+    <h1>Runes</h1>
     <ul>
-        <li>Resume Name: <%= result[0][0].resume_name %></li>
-        <li>Owned by User: <%= result[0][0].first_name%></li>
-        <li>School(s):
-            <ul>
-                <% for(var i=0; result[1].length > i; i++ ) { %>
-                    <li><%= result[1][i].school_name  %></li>
-                <% } %>
-            </ul>
-        </li>
-        <br />
-        <li> Company(ies):
-            <ul>
-                <% for(var i=0; result[2].length > i; i++ ) { %>
-                <li><%= result[2][i].company_name  %></li>
-                <% } %>
-            </ul>
-        </li>
-        <br />
-        <li> Skill(s):
-            <ul>
-                <% for(var i=0; result[3].length > i; i++ ) { %>
-                <li><%= result[3][i].name  %></li>
-                <% } %>
-            </ul>
-        </li>
+        <li>Rune Name: <%= result[0].page_name %></li>
+        <li>Mark: <%=result[0].mark%></li>
+        <li>Seal: <%=result[0].seal%></li>
+        <li>Glyph: <%=result[0].glyph%></li>
+        <li>Quintessence: <%=result[0].quintessence%></li>
     </ul>
 
-<a href="/resume/all"><< back</a>
+<a href="/rune/all"><< back</a>
 
 <%- include("../includes/footer.ejs"); %>

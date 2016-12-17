@@ -1,13 +1,14 @@
 <html>
 <head>
-    <title>Schools - <%= result[0].school_name %></title>
+    <title>Masteries - <%= result[0].page_name %></title>
 </head>
 <body>
-    <h1>Schools</h1>
+    <h1>Masteries</h1>
     <ul>
-        <li>School ID: <%= result[0].school_id%></li>
-        <li>School Name: <%= result[0].school_name %></li>
-        <li>Address ID: <%= result[0].address_id %></li>
+        <li>Mastery Name: <%= result[0].page_name %></li>
+        <li>Ferocity: <%=result[0].num_ferocity%></li>
+        <li>Cunning: <%=result[0].num_cunning%></li>
+        <li>Resolve: <%=result[0].num_resolve%></li>
     </ul>
 </body>
 

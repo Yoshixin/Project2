@@ -1,16 +1,12 @@
 <%- include("../includes/header.ejs", {title:"Accounts - " + result[0].first_name}); %>
     <h1>Accounts</h1>
     <ul>
-        <li>Account Name: <%= result[0].first_name %></li>
-        <li>Email: <%= result[0].email%></li>
-        <li>Resume(s):
-            <ul>
-                <% for(var i=0; result.length > i; i++ ) {
-                    if (result[i].resume_name !=null) { %>
-                    <li><%= result[i].resume_name  %></li>
-                <% } } %>
-            </ul>
-        </li>
+        <li>Account Name: <%= result[0].username %></li>
+        <li>level: <%= result[0].level%></li>
+        <li>division: <%=result[0].rank_divsion%></li>
+        <li>tier: <%=result[0].rank_tier%></li>
+        <li>influence points: <%=result[0].influence_points%></li>
+        <li>riot points: <%=result[0].riot_points%></li>
         <br />
     </ul>
 

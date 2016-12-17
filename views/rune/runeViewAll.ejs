@@ -1,7 +1,7 @@
 <%- include("../includes/header.ejs", {title:"rune - View All"}); %>
 
 <h1>Resumes</h1>
-        <a href="/resume/add">Add New resume</a> <br />
+        <a href="/rune/add">Add New rune</a> <br />
 
         <br />
 
@@ -9,11 +9,11 @@
             <tr><th>Name</th><th>Actions</th></tr>
             <% for(var i=0; result.length > i; i++ ) { %>
             <tr>
-                <td><a href="/resume/?resume_id=<%= result[i].resume_id %>"><%= result[i].resume_name %></a></td>
+                <td><a href="/rune/?rune_id=<%= result[i].rune_id %>"><%= result[i].page_name %></a></td>
                 <td>
-                    <button onclick="event.preventDefault();window.location.href='/resume/edit/?resume_id=<%= result[i].resume_id %>'">Edit</button>
-                    <form action="/resume/delete/" style="display:inline;">
-                        <input type="hidden" name="resume_id" id="resume_id" value="<%= result[i].resume_id %>" />
+                    <button onclick="event.preventDefault();window.location.href='/rune/edit/?rune_id=<%= result[i].rune_id %>'">Edit</button>
+                    <form action="/rune/delete/" style="display:inline;">
+                        <input type="hidden" name="rune_id" id="rune_id" value="<%= result[i].rune_id %>" />
                         <input type="submit" value="Delete"/>
                     </form>
 

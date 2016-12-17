@@ -5,11 +5,11 @@
         champion Name: <input id="champion_name" name="champion_name" type="text" />
         <br />
         <br />
-        Address
+        Abilities
         <br />
-        <select id="address_id" name="address_id" multiple="multiple">
-            <% for(var i=0; address.length > i; i++ ) { %>
-                <option value="<%= address[i].address_id %>"><%= address[i].street + ', ' + address[i].zipcode %></option>
+        <select id="ability_id" name="ability_id" multiple="multiple">
+            <% for(var i=0; ability.length > i; i++ ) { %>
+                <option value="<%= ability[i].ability_id %>"><%= ability[i].name %></option>
             <% } %>
         </select>
 

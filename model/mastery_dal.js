@@ -9,7 +9,7 @@ var connection = mysql.createConnection(db.config);
 
 /*
  create or replace view resume_view as
- select r.resume_name, s.school_name, c.company_name, sk.name from rune r
+ select r.resume_name, s.school_name, c.company_name, sk.name from mastery_page r
  join resume_school rs on rs.resume_id = r.resume_id
  join mastery s on s.school_id = rs.school_id
  join resume_company rc on r.resume_id = rc.company_id
@@ -19,17 +19,17 @@ var connection = mysql.createConnection(db.config);
  */
 
 exports.getAll = function(callback) {
-    var query = 'SELECT * FROM rune;';
+    var query = 'SELECT * FROM mastery_page; ';
 
     connection.query(query, function(err, result) {
         callback(err, result);
     });
 };
 
-exports.getById = function(resume_id, callback) {
+exports.getById = function(mastery_id, callback) {
     //var query = 'SELECT * FROM resume_view WHERE resume_id = ?';
-    var query = 'call getOneResumeInfo(?)';
-    var queryData = [resume_id];
+    var query = 'select * from mastery_page where mastery_id = ?; ';
+    var queryData = [mastery_id];
 
     connection.query(query, queryData, function(err, result) {
         callback(err, result);
@@ -37,11 +37,11 @@ exports.getById = function(resume_id, callback) {
 };
 
 exports.insert = function(params, callback) {
-    var query = 'INSERT INTO rune (resume_name, user_account_id) VALUES (?, ?)';
+    var query = 'INSERT INTO mastery_page (page_name, account_id, num_ferocity, num_cunning, num_resolve) VALUES (?, ?, ?, ?, ?) ';
 
     // the question marks in the sql query above will be replaced by the values of the
     // the data in queryData
-    var queryData = [params.resume_name, params.user_account_id];
+    var queryData = [params.page_name, params.account_id, params.num_ferocity, params.num_cunning, params.num_resolve];
 
     connection.query(query, queryData, function(err, result) {
         callback(err, result);
@@ -49,134 +49,20 @@ exports.insert = function(params, callback) {
 
 };
 
-var resumeSchoolInsert = function(resume_id,schoolIDArray,callback) {
-    var query = 'INSERT INTO resume_school (resume_id, school_id) VALUES ?';
-
-    // TO BULK INSERT RECORDS WE CREATE A MULTIDIMENSIONAL ARRAY OF THE VALUES
-    var resumeSchoolData = [];
-    for(var i=0; i < schoolIDArray.length; i++) {
-        resumeSchoolData.push([resume_id, schoolIDArray[i]]);
-    }
-    connection.query(query, [resumeSchoolData], function(err, result){
-        callback(err, result);
-    });
-};
-module.exports.resumeSchoolInsert = resumeSchoolInsert;
-
-var resumeCompanyInsert = function(resume_id,companyIDArray,callback) {
-    var query = 'INSERT INTO resume_company (resume_id, company_id) VALUES ?';
-
-    // TO BULK INSERT RECORDS WE CREATE A MULTIDIMENSIONAL ARRAY OF THE VALUES
-    var resumeCompanyData = [];
-    for(var i=0; i < companyIDArray.length; i++) {
-        resumeCompanyData.push([resume_id, companyIDArray[i]]);
-    }
-    connection.query(query, [resumeCompanyData], function(err, result){
-        callback(err, result);
-    });
-};
-module.exports.resumeCompanyInsert = resumeCompanyInsert;
-
-var resumeSkillInsert = function(resume_id,skillIDArray,callback) {
-    var query = 'INSERT INTO resume_skill (resume_id, skill_id) VALUES ?';
-
-    // TO BULK INSERT RECORDS WE CREATE A MULTIDIMENSIONAL ARRAY OF THE VALUES
-    var resumeSkillData = [];
-    for(var i=0; i < skillIDArray.length; i++) {
-        resumeSkillData.push([resume_id, skillIDArray[i]]);
-    }
-    connection.query(query, [resumeSkillData], function(err, result){
-        callback(err, result);
-    });
-};
-module.exports.resumeSkillInsert = resumeSkillInsert;
-
-var resumeSchoolDeleteAll = function(resume_id, callback){
-    var query = 'DELETE FROM resume_school WHERE resume_id = ?';
-    var queryData = [resume_id];
-
-    connection.query(query, queryData, function(err, result) {
-        callback(err, result);
-    });
-};
-module.exports.resumeSchoolDeleteAll = resumeSchoolDeleteAll;
-
-var resumeCompanyDeleteAll = function(resume_id, callback){
-    var query = 'DELETE FROM resume_company WHERE resume_id = ?';
-    var queryData = [resume_id];
-
-    connection.query(query, queryData, function(err, result) {
-        callback(err, result);
-    });
-};
-module.exports.resumeCompanyDeleteAll = resumeCompanyDeleteAll;
-
-var resumeSkillDeleteAll = function(resume_id, callback){
-    var query = 'DELETE FROM resume_skill WHERE resume_id = ?';
-    var queryData = [resume_id];
-
-    connection.query(query, queryData, function(err, result) {
-        callback(err, result);
-    });
-};
-module.exports.resumeSkillDeleteAll = resumeSkillDeleteAll;
-
-exports.delete = function(resume_id, callback) {
-    var query = 'DELETE FROM rune WHERE resume_id = ?';
-    var queryData = [resume_id];
-
-    connection.query(query, queryData, function(err, result) {
-        callback(err, result);
-    });
-
-};
 
 exports.update = function(params, callback) {
-    var query = 'UPDATE rune SET resume_name = ?, user_account_id = ? WHERE resume_id = ?';
-    var queryData = [params.resume_name, params.user_account_id, params.resume_id];
+    var query = 'UPDATE mastery_page SET page_name = ?, account_id = ?, num_ferocity = ?, num_cunning = ?, num_resolve = ? WHERE mastery_id = ?';
+    var queryData = [params.page_name, params.account_id, params.num_ferocity, params.num_cunning, params.num_resolve, params.mastery_id];
 
     connection.query(query, queryData, function(err, result) {
-        //callback(err, result);
-        
-        //schools
-        resumeSchoolDeleteAll(params.resume_id,function(err,result)
-        {
-            if (params.school_id != null) {
-                resumeSchoolInsert(params.resume_id, params.school_id, function (err, result) {
-                    //companies
-                    resumeCompanyDeleteAll(params.resume_id,function(err,result)
-                    {
-                        if (params.company_id != null) {
-                            resumeCompanyInsert(params.resume_id, params.company_id, function (err, result) {
-                                //skills
-                                resumeSkillDeleteAll(params.resume_id,function(err,result)
-                                {
-                                    if (params.skill_id != null) {
-                                        resumeSkillInsert(params.resume_id, params.skill_id, function (err, result) {
-                                            callback(err, result);
-                                        });
-                                    }
-                                    else {
-                                        callback(err,result); }
-                                });
-                            });
-                        }
-                        else {
-                            callback(err,result); }
-                    });
-                });
-            }
-            else {
-                callback(err,result); }
-        });
+        callback(err, result);
 
     });
 };
 
-
-exports.edit = function(resume_id, callback) {
-    var query = 'CALL resume_getinfo(?)';
-    var queryData = [resume_id];
+exports.edit = function(mastery_id, callback) {
+    var query = 'Select * from mastery_page where mastery_id = ?';
+    var queryData = [mastery_id];
 
     connection.query(query, queryData, function(err, result) {
         callback(err, result);

@@ -1,0 +1,32 @@
+<%- include("../includes/header.ejs", {title: title}); %>
+
+<h1><%= title %></h1>
+<p>Welcome to <%= title %></p>
+<body>
+This is a database modeled on the game League of Legends. Every player has an account, identified by its username. Accounts also have a password,
+a level (ranging 1-30), influence points (the in game currency), riot points (a premium currency), a roster of champions owned, and a rank.
+Each rank has a division and a tier.
+The ranks are Bronze, Silver, Gold, Platinum, Diamond, Master and Challenger, and within each division there are 5 tiers.
+For example, an account can be Silver 4, or the 4th tier of silver division.
+<br />
+Accounts will also have access to rune pages and mastery pages.
+Rune pages are identified by the account they are made for and a name, and the same rule applies to mastery pages.
+Rune pages each have a mark, seal, glyph, and quintessence. Mastery pages each have up to 30 nodes spread across 3 categories: Ferocity, Cunning and Resolve.
+<br />
+The game itself has a roster of champions which the user can select to play.
+Champions are identified by their name.
+Every champion has 5 abilities: a passive, 3 basic abilities and an ultimate ability. Abilities each have a name and description.
+<br />
+<img src="../../public/images/relational_schema.JPG"><br />
+<img src="../../public/images/er_diagram.png" /> <br />
+
+
+<br />
+Contact me: Definetly RealName@nopenope767@gmail.com
+<br />
+<br />
+League of Legends is a trademark of Riot Games. No copyright infringement intended.
+
+
+<br />
+<%- include("../includes/footer.ejs"); %>

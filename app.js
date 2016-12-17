@@ -6,10 +6,12 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var school = require('./routes/rune_routes');
-var company = require('./routes/champion_routes');
-var resume = require('./routes/mastery_routes');
+var about = require('./routes/about');
+var rune = require('./routes/rune_routes');
+var champion = require('./routes/champion_routes');
+var mastery = require('./routes/mastery_routes');
 var account = require('./routes/account_routes');
+var ability = require('./routes/ability_routes');
 
 var app = express();
 
@@ -27,10 +29,12 @@ app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/mastery', school);
-app.use('/champion', company);
-app.use('/rune', resume);
+app.use('/about',about);
+app.use('/mastery', mastery);
+app.use('/champion', champion);
+app.use('/rune', rune);
 app.use('/account', account);
+app.use('/ability', ability);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

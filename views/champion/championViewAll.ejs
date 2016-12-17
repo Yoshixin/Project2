@@ -1,6 +1,6 @@
 <%- include("../includes/header.ejs", {title:"champion - View All"}); %>
 
-<h1>Companies</h1>
+<h1>Champions</h1>
         <a href="/champion/add">Add New champion</a> <br />
 
         <br />
@@ -9,7 +9,7 @@
             <tr><th>Name</th><th>Actions</th></tr>
             <% for(var i=0; result.length > i; i++ ) { %>
             <tr>
-                <td><a href="/champion/?champion_id=<%= result[i].champion_id %>"><%= result[i].champion_name %></a></td>
+                <td><a href="/champion/?champion_id=<%= result[i].champion_id %>"><%= result[i].name %></a></td>
                 <td>
                     <button onclick="event.preventDefault();window.location.href='/champion/edit/?champion_id=<%= result[i].champion_id %>'">Edit</button>
                     <form action="/champion/delete/" style="display:inline;">

@@ -19,7 +19,7 @@ var connection = mysql.createConnection(db.config);
  */
 
 exports.getAll = function(callback) {
-    var query = 'SELECT * FROM account;';
+    var query = 'SELECT * FROM lol_account; ';
 
     connection.query(query, function(err, result) {
         callback(err, result);
@@ -27,9 +27,7 @@ exports.getAll = function(callback) {
 };
 
 exports.getById = function(account_id, callback) {
-    //var query = 'SELECT * FROM resume_view WHERE resume_id = ?';
-    var query = 'Select a.*, r.resume_name from account a ' +
-        'Left Join rune r on r.user_account_id = a.account_id and a.account_id = ?';
+    var query = 'Select * from lol_account where account_id = ? ';
     var queryData = [account_id];
 
     connection.query(query, queryData, function(err, result) {
@@ -38,36 +36,54 @@ exports.getById = function(account_id, callback) {
 };
 
 exports.insert = function(params, callback) {
-    var query = 'INSERT INTO account (email, first_name, last_name) VALUES (?, ?, ?)';
+    var query = 'INSERT INTO lol_account (username, password, level, influence_points, riot_points) VALUES (?, ?, ?,?,?) ';
 
     // the question marks in the sql query above will be replaced by the values of the
     // the data in queryData
-    var queryData = [params.email, params.first_name, params.last_name];
+    var queryData = [params.username, params.password, params.level,params.influence_points,params.riot_points];
 
     connection.query(query, queryData, function(err, result) {
         callback(err, result);
     });
 };
 
-var resumeUpdate = function(account_id,resume_id,callback) {
-    var query = 'UPDATE RESUME set user_account_id = ? where resume_id = ?';
+var runeUpdate = function(account_id,rune_id,callback) {
+    var query = 'UPDATE rune_page set account_id = ? where rune_id = ? ';
     var queryData = [account_id, resume_id];
 
     connection.query(query, queryData, function(err, result){
         callback(err, result);
     });
 };
-module.exports.resumeUpdate = resumeUpdate;
+module.exports.runeUpdate = runeUpdate;
+
+var masteryUpdate = function(account_id,mastery_id,callback) {
+    var query = 'UPDATE mastery_page set account_id = ? where mastery_id = ? ';
+    var queryData = [account_id, resume_id];
+
+    connection.query(query, queryData, function(err, result){
+        callback(err, result);
+    });
+};
+module.exports.masteryUpdate = masteryUpdate;
 
 
 exports.update = function(params, callback) {
-    var query = 'UPDATE account SET email = ?, first_name = ?, last_name = ? WHERE account_id = ?';
-    var queryData = [params.email, params.first_name, params.last_name, params.account_id];
+    var query = 'UPDATE lol_account SET username = ?, password = ?, level = ?, influence_points = ?, riot_points = ?, ' +
+        'rank_division = ?, rank_tier = ? WHERE account_id = ? ';
+    var queryData = [params.username, params.password, params.level, params.influence_points, params.riot_points,
+        params.rank_divsion, params.rank_tier, params.account_id];
 
     connection.query(query, queryData, function(err, result) {
-        if(params.resume_id!=null) {
-            resumeUpdate(params.account_id, params.resume_id, function (err, result) {
-                callback(err, result);
+        if(params.rune_id!=null) {
+            runeUpdate(params.account_id, params.resume_id, function (err, result) {
+                if(params.mastery_id!=null) {
+                    masteryUpdate(params.account_id,params.mastery_id, function(err, result) {
+                        callback(err,result);
+                    });
+                }
+                else
+                    callback(err, result);
             });
         }
         else {
@@ -78,7 +94,7 @@ exports.update = function(params, callback) {
 
 
 exports.edit = function(account_id, callback) {
-    var query = 'CALL account_getinfo(?)';
+    var query = 'Select * from AccountRunesandMasteriesView where AccountRunesandMasteriesView.account_id = ? ';
     var queryData = [account_id];
 
     connection.query(query, queryData, function(err, result) {
@@ -87,7 +103,7 @@ exports.edit = function(account_id, callback) {
 };
 
 exports.delete = function(account_id, callback) {
-    var query = 'DELETE FROM account WHERE account_id = ?';
+    var query = 'DELETE FROM lol_account WHERE account_id = ? ';
     var queryData = [account_id];
 
     connection.query(query, queryData, function(err, result) {

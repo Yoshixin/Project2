@@ -4,7 +4,7 @@ var champion_dal = require('../model/champion_dal');
 var ability_dal = require('../model/ability_dal');
 
 
-// View All companies
+// View All abilities
 router.get('/all', function(req, res) {
     champion_dal.getAll(function(err, result){
         if(err) {
@@ -78,7 +78,7 @@ router.get('/edit', function(req, res){
     else {
         champion_dal.edit(req.query.champion_id, function(err, result){
             console.log(result);
-            res.render('champion/championUpdate', {champion: result[0], ability: result[1]});
+            res.render('champion/championUpdate', {champion: result[0][0], ability: result[1]});
         });
     }
 
